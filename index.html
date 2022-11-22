@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitare</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>Solitare</h1>
+    </header>
+    <main>
+        <section id="main_upper_line">
+            Felső sor
+        </section>
+        <section id="tableau">
+            <div class="tableau-column">
+                <div class="card">
+                    Jack
+                </div>
+            </div>
+            <div class="tableau-column">
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card">
+                    Jack
+                </div>
+            </div>
+            <div class="tableau-column">
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card">
+                    Jack
+                </div>
+            </div>
+            <div class="tableau-column">
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card">
+                    Jack
+                </div>
+            </div>
+            <div class="tableau-column">
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card">
+                    Jack
+                </div>
+            </div>
+            <div class="tableau-column">
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card">
+                    Jack
+                </div>
+            </div>
+            <div class="tableau-column">
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card reversed">
+                    Jack
+                </div>
+                <div class="card">
+                    Jack
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        const columns = document.querySelectorAll('.tableau-column');
+        columns.forEach((el) => {
+            const cards = el.querySelectorAll('.card');
+            const numberOfCards = cards.length;
+            cards.forEach((card, index) => {
+                card.style.setProperty('--custom-index', index % numberOfCards);
+            });
+            
+        })
+    </script>
+</body>
+
+</html>
