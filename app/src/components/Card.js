@@ -17,20 +17,6 @@ const Card = props => {
         event.dataTransfer.setData("text", JSON.stringify(props.card));
     }
 
-    const allowDrop = (ev) => {
-        if (props.card.reversed) {
-            return false;
-        }
-        // here I have to examine wether I can drop the card here or not
-        ev.preventDefault();
-    }
-
-    const drop = (ev) => {
-        ev.preventDefault();
-        var card = ev.dataTransfer.getData("text");
-        props.addToColumn(JSON.parse(card));
-    }
-
     const dragEndedHandler = () => {
         //props.removeFromColumn(card);
     }
@@ -40,10 +26,10 @@ const Card = props => {
             id={shape + '_' + value}
             draggable={props.card.reversed}
             className="card-wrapper"
-            onDragStart={dragStartHandler}
-            onDragEnd={dragEndedHandler}
-            onDragOver={allowDrop}
-            onDrop={drop}
+            onDragStart={props.onDragStart}
+            onDragEnd={props.onDragEnd}
+            onDragOver={props.onDragOver}
+            onDrop={props.onDrop}
             style={{ top: (-8 * index) + 'rem' }}>
             <div className={reversedStyle}>
                 <div className="card-front">

@@ -11,11 +11,46 @@ const TableauColumn = (props) => {
         });
     }
 
+    const removeFromColumn = (card) => {
+        setColumn((previous) => {
+            let filtered = [...previous].filter(c => !(c.shape == card.shape && c.value == card.value))
+            return filtered;
+        })
+    }
+
+    const dragEndHandler = (event, card) => {
+        removeFromColumn(card);
+    };
+
+    const dragStartHandler = (event, card) => {
+        if (card.reversed) {
+            return false;
+        }
+        event.dataTransfer.setData("text", JSON.stringify(card));
+    };
+
+    const allowDrop = (event, card) => {
+        if (card.reversed) {
+            return false;
+        }
+        event.preventDefault();
+    };
+
+    const dropHandler = (event) => {
+        event.preventDefault();
+        var card = event.dataTransfer.getData("text");
+        addToColumn(JSON.parse(card));
+    };
+
     return (
         <div className="tableau-column">
             {
                 column.map((card, index) => (
                     <Card
+                        onDragStart={(event) => dragStartHandler(event, card)}
+                        onDragEnd={(event) => dragEndHandler(event, card)}
+                        onDragOver={(event) => allowDrop(event, card)}
+                        onDrop={dropHandler}
                         card={card}
                         index={index}
                         addToColumn={addToColumn}
