@@ -1,0 +1,1 @@
+- drag and drop to self makes the card disappear

@@ -11,9 +11,17 @@ const TableauColumn = (props) => {
         });
     }
 
+    const reverseLastCard = (column) => {
+        let lastCard = column[column.length - 1];
+        if (lastCard.reversed) {
+            lastCard.reversed = false;
+        }
+    }
+
     const removeFromColumn = (card) => {
         setColumn((previous) => {
             let filtered = [...previous].filter(c => !(c.shape == card.shape && c.value == card.value))
+            reverseLastCard(filtered);
             return filtered;
         })
     }
@@ -53,7 +61,6 @@ const TableauColumn = (props) => {
                         onDragEnd={(event) => dragEndHandler(event, card)}
                         onDragOver={(event) => allowDrop(event, card)}
                         onDrop={dropHandler}
-
                         card={card}
                         index={index}
                         addToColumn={addToColumn}
