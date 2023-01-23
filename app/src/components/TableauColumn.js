@@ -32,8 +32,10 @@ const TableauColumn = (props) => {
     }
 
     const dragEndHandler = (event, card) => {
-        if (event.dataTransfer.dropEffect === 'copy') {
-            removeFromColumn(card);
+        if (props.dragEvent === 'success') {
+            if (event.dataTransfer.dropEffect === 'copy') {
+                removeFromColumn(card);
+            }
         }
     };
 
@@ -53,6 +55,7 @@ const TableauColumn = (props) => {
 
     const allowDropOnEmpty = (event) => {
         event.preventDefault();
+        props.onAddToColumn();
     };
 
     const dropHandler = (event) => {
@@ -61,7 +64,10 @@ const TableauColumn = (props) => {
         var card = JSON.parse(cardAsString);
 
         if (canItFollow(cards, card)) {
-            addToColumn(card); 
+            addToColumn(card);
+            props.onAddToColumn();
+        } else {
+            props.onFailedDragEvent();
         }
     };
 
