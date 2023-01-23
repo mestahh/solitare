@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Card from "./Card";
+import EmptyCard from "./EmptyCard";
 
 const TableauColumn = (props) => {
 
@@ -12,9 +13,11 @@ const TableauColumn = (props) => {
     }
 
     const reverseLastCard = (column) => {
-        let lastCard = column[column.length - 1];
-        if (lastCard.reversed) {
-            lastCard.reversed = false;
+        if (column.length > 0) {
+            let lastCard = column[column.length - 1];
+            if (lastCard.reversed) {
+                lastCard.reversed = false;
+            }
         }
     }
 
@@ -46,28 +49,46 @@ const TableauColumn = (props) => {
         event.preventDefault();
     };
 
+    const allowDropOnEmpty = (event) => {
+        event.preventDefault();
+    };
+
     const dropHandler = (event) => {
         event.preventDefault();
         var card = event.dataTransfer.getData("text");
         addToColumn(JSON.parse(card));
     };
 
-    return (
-        <div className="tableau-column">
-            {
-                column.map((card, index) => (
-                    <Card
-                        onDragStart={(event) => dragStartHandler(event, card)}
-                        onDragEnd={(event) => dragEndHandler(event, card)}
-                        onDragOver={(event) => allowDrop(event, card)}
-                        onDrop={dropHandler}
-                        card={card}
-                        index={index}
-                        addToColumn={addToColumn}
-                        key={card.value + '_' + card.shape} />
-                ))}
-        </div>
-    );
+    var renderedColumn;
+    if (column.length > 0) {
+        renderedColumn =
+            (
+                <div className="tableau-column">
+                    {
+                        column.map((card, index) => (
+                            <Card
+                                onDragStart={(event) => dragStartHandler(event, card)}
+                                onDragEnd={(event) => dragEndHandler(event, card)}
+                                onDragOver={(event) => allowDrop(event, card)}
+                                onDrop={dropHandler}
+                                card={card}
+                                index={index}
+                                key={card.value + '_' + card.shape} />
+                        ))}
+                </div>
+            );
+    } else {
+        renderedColumn = (
+            <div className="tableau-column">
+                <EmptyCard
+                    onDragOver={allowDropOnEmpty}
+                    onDrop={dropHandler}
+                />
+            </div>
+        );
+    }
+
+    return renderedColumn;
 }
 
 export default TableauColumn;
