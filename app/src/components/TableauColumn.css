@@ -1,0 +1,7 @@
+.tableau-column {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 80vw;
+    padding-top: 4rem;
+}
