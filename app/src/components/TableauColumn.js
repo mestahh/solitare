@@ -19,7 +19,9 @@ const TableauColumn = (props) => {
     }
 
     const dragEndHandler = (event, card) => {
-        removeFromColumn(card);
+        if (event.dataTransfer.dropEffect === 'copy') {
+            removeFromColumn(card);
+        }
     };
 
     const dragStartHandler = (event, card) => {
@@ -51,6 +53,7 @@ const TableauColumn = (props) => {
                         onDragEnd={(event) => dragEndHandler(event, card)}
                         onDragOver={(event) => allowDrop(event, card)}
                         onDrop={dropHandler}
+
                         card={card}
                         index={index}
                         addToColumn={addToColumn}

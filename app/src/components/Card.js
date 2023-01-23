@@ -10,20 +10,9 @@ const Card = props => {
 
     const imageUrl = '/cards/' + value + '_of_' + shape + 's.png';
 
-    const dragStartHandler = (event) => {
-        if (props.reversed) {
-            return false;
-        }
-        event.dataTransfer.setData("text", JSON.stringify(props.card));
-    }
-
-    const dragEndedHandler = () => {
-        //props.removeFromColumn(card);
-    }
-
     return (
         <div
-            id={shape + '_' + value}
+            id={id}
             draggable={props.card.reversed}
             className="card-wrapper"
             onDragStart={props.onDragStart}
