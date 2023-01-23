@@ -1,0 +1,33 @@
+.card-front img, .card-back img {
+    max-width: 100%;
+}
+
+.card-wrapper {
+    min-height: 175px;
+    min-width: 120px;
+    position: relative;
+}
+
+.card-wrapper-inner {
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card-front, 
+.card-back {
+    max-width: 100%;
+    position: absolute;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    /* Safari */
+    backface-visibility: hidden;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.reversed {
+    transform: rotateY(180deg);
+}
