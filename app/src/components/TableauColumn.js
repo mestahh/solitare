@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Card from "./Card";
 import EmptyCard from "./EmptyCard";
+import canItFollow from "../helpers/draghelper";
 
 const TableauColumn = (props) => {
 
-    const [column, setColumn] = useState(props.column);
+    const [cards, setCards] = useState(props.column.cards);
+    const id = props.column.id;
 
     const addToColumn = (card) => {
-        setColumn((previous) => {
+        setCards((previous) => {
             return [...previous, card];
         });
     }
@@ -22,11 +24,11 @@ const TableauColumn = (props) => {
     }
 
     const removeFromColumn = (card) => {
-        setColumn((previous) => {
+        setCards((previous) => {
             let filtered = [...previous].filter(c => !(c.shape == card.shape && c.value == card.value))
             reverseLastCard(filtered);
             return filtered;
-        })
+        });
     }
 
     const dragEndHandler = (event, card) => {
@@ -55,17 +57,21 @@ const TableauColumn = (props) => {
 
     const dropHandler = (event) => {
         event.preventDefault();
-        var card = event.dataTransfer.getData("text");
-        addToColumn(JSON.parse(card));
+        var cardAsString = event.dataTransfer.getData("text");
+        var card = JSON.parse(cardAsString);
+
+        if (canItFollow(cards, card)) {
+            addToColumn(card); 
+        }
     };
 
     var renderedColumn;
-    if (column.length > 0) {
+    if (cards.length > 0) {
         renderedColumn =
             (
                 <div className="tableau-column">
                     {
-                        column.map((card, index) => (
+                        cards.map((card, index) => (
                             <Card
                                 onDragStart={(event) => dragStartHandler(event, card)}
                                 onDragEnd={(event) => dragEndHandler(event, card)}

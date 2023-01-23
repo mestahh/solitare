@@ -6,7 +6,7 @@ import Tableau from './components/Tableau';
 const tableauDeal = {
   "columns": [
     {
-      "column": [
+      "cards": [
         {
           "reversed": false,
           "shape": "CLUB",
@@ -14,10 +14,11 @@ const tableauDeal = {
         }
       ],
       "complete": false,
-      "empty": false
+      "empty": false,
+      "id": 1
     },
     {
-      "column": [
+      "cards": [
         {
           "reversed": true,
           "shape": "HEART",
@@ -30,10 +31,11 @@ const tableauDeal = {
         }
       ],
       "complete": false,
-      "empty": false
+      "empty": false,
+      "id": 2
     },
     {
-      "column": [
+      "cards": [
         {
           "reversed": true,
           "shape": "CLUB",
@@ -51,10 +53,11 @@ const tableauDeal = {
         }
       ],
       "complete": false,
-      "empty": false
+      "empty": false,
+      "id": 3
     },
     {
-      "column": [
+      "cards": [
         {
           "reversed": true,
           "shape": "CLUB",
@@ -77,10 +80,11 @@ const tableauDeal = {
         }
       ],
       "complete": false,
-      "empty": false
+      "empty": false,
+      "id": 4
     },
     {
-      "column": [
+      "cards": [
         {
           "reversed": true,
           "shape": "DIAMOND",
@@ -108,10 +112,11 @@ const tableauDeal = {
         }
       ],
       "complete": false,
-      "empty": false
+      "empty": false,
+      "id": 5
     },
     {
-      "column": [
+      "cards": [
         {
           "reversed": true,
           "shape": "CLUB",
@@ -144,10 +149,11 @@ const tableauDeal = {
         }
       ],
       "complete": false,
-      "empty": false
+      "empty": false,
+      "id": 6
     },
     {
-      "column": [
+      "cards": [
         {
           "reversed": true,
           "shape": "DIAMOND",
@@ -185,7 +191,8 @@ const tableauDeal = {
         }
       ],
       "complete": false,
-      "empty": false
+      "empty": false,
+      "id": 7
     }
   ]
 };
@@ -193,7 +200,7 @@ const tableauDeal = {
 function App() {
 
   const [tableau, setTableau] = useState([]);
-  const count = useSelector(state => state.tableau.value)
+  // const count = useSelector(state => state.tableau.value)
 
   useEffect(() => {
     setTableau(tableauDeal.columns);
@@ -203,7 +210,6 @@ function App() {
   return (
     <div>
       <header>
-        <h1>{count}</h1>
       </header>
       <main>
         <section id="main-top">
