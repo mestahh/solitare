@@ -2,10 +2,10 @@ import './Card.css';
 
 const Card = props => {
 
-    const value = props.value.toLowerCase();
-    const shape = props.shape.toLowerCase();
+    const value = props.card.value.toLowerCase();
+    const shape = props.card.shape.toLowerCase();
     const index = props.index;
-    const reversedStyle = props.reversed ? 'card-wrapper-inner reversed' : 'card-wrapper-inner';
+    const reversedStyle = props.card.reversed ? 'card-wrapper-inner reversed' : 'card-wrapper-inner';
     const id = shape + '_' + value;
 
     const imageUrl = '/cards/' + value + '_of_' + shape + 's.png';
@@ -18,7 +18,7 @@ const Card = props => {
     }
 
     const allowDrop = (ev) => {
-        if (props.reversed) {
+        if (props.card.reversed) {
             return false;
         }
         // here I have to examine wether I can drop the card here or not
@@ -38,7 +38,7 @@ const Card = props => {
     return (
         <div
             id={shape + '_' + value}
-            draggable={props.reversed}
+            draggable={props.card.reversed}
             className="card-wrapper"
             onDragStart={dragStartHandler}
             onDragEnd={dragEndedHandler}

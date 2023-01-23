@@ -17,9 +17,6 @@ const TableauColumn = (props) => {
                 column.map((card, index) => (
                     <Card
                         card={card}
-                        value={card.value}
-                        shape={card.shape}
-                        reversed={card.reversed}
                         index={index}
                         addToColumn={addToColumn}
                         key={card.value + '_' + card.shape} />
