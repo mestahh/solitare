@@ -17,12 +17,14 @@ function Tableau(props) {
     }
   }
 
-  const addToColumn = (columnId, card) => {
+  const addToColumn = (columnId, cards) => {
     setColumns((previousColumns) => {
-      const previous = removeFromColumn(previousColumns, card);
+      const previous = removeFromColumn(previousColumns, cards);
       previous.forEach(c => {
         if (c.id === columnId) {
-          c.cards.push(card);
+          cards.forEach(cardToAdd => {
+            c.cards.push(cardToAdd);
+          });
         }
         reverseLastCard(c.cards);
       })
@@ -31,11 +33,12 @@ function Tableau(props) {
     });
   }
 
-  const removeFromColumn = (previousColumns, cardToRemove) => {
+  const removeFromColumn = (previousColumns, cardsToRemove) => {
     const prev = [...previousColumns];
+    const cardIdsToRemove = cardsToRemove.map(c => c.id);
     const newColumns = [];
     prev.forEach(c => {
-      let newColumn = c.cards.filter(card => card.id !== cardToRemove.id);
+      let newColumn = c.cards.filter(card => !cardIdsToRemove.includes(card.id));
       newColumns.push({ ...c, cards: newColumn });
     });
     return newColumns;
@@ -47,12 +50,12 @@ function Tableau(props) {
 
   const dropHandler = (event, column) => {
     event.preventDefault();
-    var cardAsString = event.dataTransfer.getData("text");
-
-    if (cardAsString) {
-      var card = JSON.parse(cardAsString);
-      if (canItFollow(column.cards, card) || column.cards.length === 0) {
-        addToColumn(column.id, card);
+    var cardsAsString = event.dataTransfer.getData("text");
+    
+    if (cardsAsString) {
+      var cards = JSON.parse(cardsAsString);
+      if (canItFollow(column.cards, cards) || column.cards.length === 0) {
+        addToColumn(column.id, cards);
       }
     }
   }

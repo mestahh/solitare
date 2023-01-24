@@ -1,9 +1,11 @@
-const canItFollow = (targetColumn, cardToDrop) => {
+const canItFollow = (targetColumn, cardsToDrop) => {
+
 
     if (targetColumn.length === 0) {
         return true;
     }
-    
+    const cardToDrop = cardsToDrop[0];
+
     const lastCard = targetColumn[targetColumn.length - 1];
 
     // if (value.order == (card.value.order + 1)) {

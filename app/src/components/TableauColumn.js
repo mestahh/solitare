@@ -1,15 +1,32 @@
+import { useState } from "react";
 import Card from "./Card";
 import EmptyCard from "./EmptyCard";
 
 const TableauColumn = (props) => {
 
     const id = props.column.id;
-
+    const cards = props.column.cards;
+    
     const dragStartHandler = (event, card) => {
+
+        let cards = props.column.cards;
+
         if (card.reversed) {
             return false;
         }
-        event.dataTransfer.setData("text", JSON.stringify(card));
+        let cardIndex = cards.indexOf(card);
+
+        if (cardIndex === cards.length - 1) {
+            event.dataTransfer.setData("text", JSON.stringify([card]));
+        } else {
+            let cardsToMove = [];
+            cards.map((c, index) => {
+                if (index >= cardIndex) {
+                    cardsToMove.push(c);
+                }
+            });
+            event.dataTransfer.setData("text", JSON.stringify(cardsToMove));
+        }
     };
 
     var renderedColumn;
