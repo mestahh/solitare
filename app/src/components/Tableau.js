@@ -42,7 +42,6 @@ function Tableau(props) {
   }
 
   const allowDrop = (event, column) => {
-    console.log('allowing drop on ' + column.id);
     event.preventDefault();
   };
 

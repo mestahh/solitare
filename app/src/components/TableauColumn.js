@@ -9,7 +9,6 @@ const TableauColumn = (props) => {
         if (card.reversed) {
             return false;
         }
-        console.log('Drag started', card);
         event.dataTransfer.setData("text", JSON.stringify(card));
     };
 
