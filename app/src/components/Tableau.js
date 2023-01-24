@@ -26,7 +26,7 @@ function Tableau(props) {
         }
         reverseLastCard(c.cards);
       })
-      
+
       return previous;
     });
   }
@@ -37,7 +37,7 @@ function Tableau(props) {
     prev.forEach(c => {
       let newColumn = c.cards.filter(card => card.id !== cardToRemove.id);
       newColumns.push({ ...c, cards: newColumn });
-    })
+    });
     return newColumns;
   }
 
@@ -48,9 +48,12 @@ function Tableau(props) {
   const dropHandler = (event, column) => {
     event.preventDefault();
     var cardAsString = event.dataTransfer.getData("text");
-    var card = JSON.parse(cardAsString);
-    if (canItFollow(column.cards, card) || column.cards.length === 0) {
-      addToColumn(column.id, card);
+
+    if (cardAsString) {
+      var card = JSON.parse(cardAsString);
+      if (canItFollow(column.cards, card) || column.cards.length === 0) {
+        addToColumn(column.id, card);
+      }
     }
   }
 
