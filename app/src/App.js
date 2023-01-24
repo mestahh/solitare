@@ -227,14 +227,6 @@ const tableauDeal = {
 
 function App() {
 
-  const [tableau, setTableau] = useState([]);
-  // const count = useSelector(state => state.tableau.value)
-
-  useEffect(() => {
-    setTableau(tableauDeal.columns);
-  }, []);
-
-
   return (
     <div>
       <header>
@@ -243,7 +235,7 @@ function App() {
         <section id="main-top">
 
         </section>
-        <Tableau tableau={tableau} />
+        <Tableau tableau={tableauDeal.columns} />
       </main>
     </div>
   );

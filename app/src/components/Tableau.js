@@ -2,30 +2,69 @@ import { useState } from 'react';
 import './Card';
 import './Tableau.css';
 import TableauColumn from './TableauColumn';
+import canItFollow from "../helpers/draghelper";
 
 function Tableau(props) {
 
-  const [dragEvent, setDragEvent] = useState();
+  const [columns, setColumns] = useState(props.tableau);
 
-  const onSuccessfulDragEvent = () => {
-    setDragEvent('success');
+  const reverseLastCard = (column) => {
+    if (column.length > 0) {
+      let lastCard = column[column.length - 1];
+      if (lastCard.reversed) {
+        lastCard.reversed = false;
+      }
+    }
   }
 
-  const onUnsuccessfulDragEvent = () => {
-    setDragEvent('failure');
+  const addToColumn = (columnId, card) => {
+    setColumns((previousColumns) => {
+      const previous = removeFromColumn(previousColumns, card);
+      previous.forEach(c => {
+        if (c.id === columnId) {
+          c.cards.push(card);
+        }
+        reverseLastCard(c.cards);
+      })
+      
+      return previous;
+    });
+  }
+
+  const removeFromColumn = (previousColumns, cardToRemove) => {
+    const prev = [...previousColumns];
+    const newColumns = [];
+    prev.forEach(c => {
+      let newColumn = c.cards.filter(card => card.id !== cardToRemove.id);
+      newColumns.push({ ...c, cards: newColumn });
+    })
+    return newColumns;
+  }
+
+  const allowDrop = (event, column) => {
+    console.log('allowing drop on ' + column.id);
+    event.preventDefault();
+  };
+
+  const dropHandler = (event, column) => {
+    event.preventDefault();
+    var cardAsString = event.dataTransfer.getData("text");
+    var card = JSON.parse(cardAsString);
+    if (canItFollow(column.cards, card) || column.cards.length === 0) {
+      addToColumn(column.id, card);
+    }
   }
 
   return (
     <section id="tableau">
       {
-        props.tableau.map((column) => (
-          <TableauColumn 
-            column={column} 
+        columns.map((column) => (
+          <TableauColumn
+            column={column}
             key={column.id}
-            onAddToColumn={onSuccessfulDragEvent} 
-            onFailedDragEvent={onUnsuccessfulDragEvent}
-            dragEvent={dragEvent}
-            />
+            onDragOver={(event) => allowDrop(event, column)}
+            onDrop={(event) => dropHandler(event, column)}
+          />
         ))
       }
     </section>

@@ -6,8 +6,6 @@ const canItFollow = (targetColumn, cardToDrop) => {
     
     const lastCard = targetColumn[targetColumn.length - 1];
 
-    console.log(lastCard, cardToDrop);
-
     // if (value.order == (card.value.order + 1)) {
     if (cardToDrop.shape == 'DIAMOND' || cardToDrop.shape == 'HEART') {
         if (lastCard.shape == 'CLUB' || lastCard.shape == 'SPADE') {
