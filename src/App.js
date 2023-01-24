@@ -1,7 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import './App.css';
+import Foundation from './components/Foundation';
 import Tableau from './components/Tableau';
+
+const foundation = {
+  "columns": [
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 11
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 12
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 13
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 14
+    }
+  ]
+}
 
 const tableauDeal = {
   "columns": [
@@ -233,8 +261,10 @@ function App() {
       </header>
       <main>
         <section id="main-top">
-
+        <Foundation foundation={foundation.columns} />  
         </section>
+        
+        
         <Tableau tableau={tableauDeal.columns} />
       </main>
     </div>

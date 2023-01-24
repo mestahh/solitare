@@ -1,0 +1,12 @@
+.foundation-column {
+    max-width: 120px;
+    padding: 2rem 0;
+}
+
+.foundation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 750px;
+}
+

@@ -1,3 +1,9 @@
+.card-wrapper {
+    min-height: 175px;
+    min-width: 120px;
+    position: relative;
+}
+
 .card-wrapper.empty {
     border: 1px solid #8e8e8e;
     border-radius: 5px;

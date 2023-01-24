@@ -7,6 +7,8 @@ const TableauColumn = (props) => {
     const id = props.column.id;
     const cards = props.column.cards;
     
+    console.log(id, cards.length);
+
     const dragStartHandler = (event, card) => {
 
         let cards = props.column.cards;
