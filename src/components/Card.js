@@ -9,6 +9,8 @@ const Card = props => {
     const id = shape + '_' + value;
 
     const imageUrl = '/cards/' + value + '_of_' + shape + 's.png';
+    var cardPosition = { top: (-8 * index) + 'rem' };
+
 
     return (
         <div
@@ -19,13 +21,13 @@ const Card = props => {
             onDragEnd={props.onDragEnd}
             onDragOver={props.onDragOver}
             onDrop={props.onDrop}
-            style={{ top: (-8 * index) + 'rem' }}>
+            style={cardPosition}>
             <div className={reversedStyle}>
                 <div className="card-front">
-                    <img src={imageUrl} alt="Avatar" />
+                    <img src={imageUrl} alt="Card image" />
                 </div>
                 <div className="card-back">
-                    <img src="/cards/background.png" alt="Avatar" />
+                    <img src="/cards/background.png" alt="Card back" />
                 </div>
             </div>
         </div>

@@ -1,35 +1,7 @@
+import { useState } from 'react';
 import './App.css';
 import Foundation from './components/Foundation';
 import Tableau from './components/Tableau';
-
-const foundation = {
-  "columns": [
-    {
-      "cards": [],
-      "complete": false,
-      "empty": false,
-      "id": 11
-    },
-    {
-      "cards": [],
-      "complete": false,
-      "empty": false,
-      "id": 12
-    },
-    {
-      "cards": [],
-      "complete": false,
-      "empty": false,
-      "id": 13
-    },
-    {
-      "cards": [],
-      "complete": false,
-      "empty": false,
-      "id": 14
-    }
-  ]
-}
 
 const tableauDeal = {
   "columns": [
@@ -249,11 +221,73 @@ const tableauDeal = {
       "complete": false,
       "empty": false,
       "id": 7
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 11
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 12
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 13
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "empty": false,
+      "id": 14
     }
   ]
 };
 
 function App() {
+
+  const [columns, setColumns] = useState(tableauDeal.columns);
+
+  const reverseLastCard = (column) => {
+    if (column.length > 0) {
+      let lastCard = column[column.length - 1];
+      if (lastCard.reversed) {
+        lastCard.reversed = false;
+      }
+    }
+  }
+
+  const addToColumn = (targetColumnId, cards) => {
+    console.log('Adding ' + JSON.stringify(cards) + ' to ' + targetColumnId );
+    setColumns((previousColumns) => {
+      const previous = removeFromColumn(previousColumns, cards);
+      previous.forEach(c => {
+        if (c.id === targetColumnId) {
+          cards.forEach(cardToAdd => {
+            c.cards.push(cardToAdd);
+          });
+        }
+        reverseLastCard(c.cards);
+      })
+      return previous;
+    });
+  }
+
+  const removeFromColumn = (previousColumns, cardsToRemove) => {
+    const prev = [...previousColumns];
+    const cardIdsToRemove = cardsToRemove.map(c => c.id);
+    const newColumns = [];
+    prev.forEach(c => {
+      let newColumn = c.cards.filter(card => !cardIdsToRemove.includes(card.id));
+      newColumns.push({ ...c, cards: newColumn });
+    });
+    return newColumns;
+  }
 
   return (
     <div>
@@ -261,11 +295,9 @@ function App() {
       </header>
       <main>
         <section id="main-top">
-        <Foundation foundation={foundation.columns} />  
+          <Tableau columns={columns.slice(7)} addToColumn={addToColumn}/>
         </section>
-        
-        
-        <Tableau tableau={tableauDeal.columns} />
+        <Tableau columns={columns.slice(0,7)} addToColumn={addToColumn}/>
       </main>
     </div>
   );

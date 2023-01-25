@@ -1,13 +1,11 @@
-import { useState } from "react";
 import Card from "./Card";
 import EmptyCard from "./EmptyCard";
 
 const TableauColumn = (props) => {
 
-    const id = props.column.id;
-    const cards = props.column.cards;
-    
-    console.log(id, cards.length);
+    const allowDrop = (event) => {
+        event.preventDefault();
+    };
 
     const dragStartHandler = (event, card) => {
 
@@ -40,7 +38,7 @@ const TableauColumn = (props) => {
                         props.column.cards.map((card, index) => (
                             <Card
                                 onDragStart={(event) => dragStartHandler(event, card)}
-                                onDragOver={props.onDragOver}
+                                onDragOver={allowDrop}
                                 onDrop={props.onDrop}
                                 card={card}
                                 index={index}
@@ -52,7 +50,7 @@ const TableauColumn = (props) => {
         renderedColumn = (
             <div className="tableau-column">
                 <EmptyCard
-                    onDragOver={props.onDragOver}
+                    onDragOver={allowDrop}
                     onDrop={props.onDrop}
                 />
             </div>

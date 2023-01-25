@@ -23,30 +23,3 @@ main {
   min-width: 100%;
   min-height: 100%;
 }
-
-.tableau-column { 
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  min-height: 80vw;
-  /* background-color: lightblue; */
-}
-
-.card {
-  background-color: white;
-  border-radius: var(--radius);
-  min-height: 200px;
-  min-width: 120px;
-  transform: translateY(calc(-160px * (var(--custom-index))));
-  cursor: move;
-  box-shadow: 2px -3px 3px rgba(0, 0, 0, 0.3);
-  
-  /* temporary fix card titles */
-  text-align: center;
-  padding-top: 10px;
-  /* Card title fix */
-}
-
-.card.reversed {
-  background-color: red;
-}

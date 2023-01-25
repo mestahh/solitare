@@ -9,18 +9,17 @@ const Foundation = (props) => {
 
     const [columns, setColumns] = useState(props.foundation);
 
-    
-
     const reverseLastCard = (column) => {
-        if (column.length > 0) {
-            let lastCard = column[column.length - 1];
-            if (lastCard.reversed) {
-                lastCard.reversed = false;
-            }
-        }
+        // if (column.length > 0) {
+        //     let lastCard = column[column.length - 1];
+        //     if (lastCard.reversed) {
+        //         lastCard.reversed = false;
+        //     }
+        // }
     }
 
     const addToColumn = (columnId, cards) => {
+        console.log('Adding to foundation');
         setColumns((previousColumns) => {
             const previous = removeFromColumn(previousColumns, cards);
             previous.forEach(c => {
@@ -31,7 +30,6 @@ const Foundation = (props) => {
                 }
                 reverseLastCard(c.cards);
             })
-
             return previous;
         });
     }
@@ -66,7 +64,7 @@ const Foundation = (props) => {
     return (
         <section className="foundation">
             {
-                props.foundation.map((column) => (
+                columns.map((column) => (
                     <TableauColumn
                         column={column}
                         key={column.id}
