@@ -23,3 +23,8 @@ main {
   min-width: 100%;
   min-height: 100%;
 }
+
+#main-top {
+  max-height: calc(4rem + 175px);
+  padding: 2rem;
+}

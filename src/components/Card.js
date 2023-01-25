@@ -9,7 +9,7 @@ const Card = props => {
     const id = shape + '_' + value;
 
     const imageUrl = '/cards/' + value + '_of_' + shape + 's.png';
-    var cardPosition = { top: (-8 * index) + 'rem' };
+    var cardPosition = { top: (props.cardOverlap * index) + 'px' };
 
 
     return (

@@ -28,6 +28,7 @@ function Tableau(props) {
           <TableauColumn
             column={column}
             key={column.id}
+            cardOverlap={props.cardOverlap}
             onDrop={(event) => dropHandler(event, column)}
           />
         ))

@@ -12,9 +12,9 @@ function App() {
       </header>
       <main>
         <section id="main-top">
-          <Tableau columns={gameState.columns.slice(7)} />
+          <Tableau columns={gameState.columns.slice(7)} cardOverlap='-174' />
         </section>
-        <Tableau columns={gameState.columns.slice(0, 7)} />
+        <Tableau columns={gameState.columns.slice(0, 7)} cardOverlap='-135' />
       </main>
     </div>
   );

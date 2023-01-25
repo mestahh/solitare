@@ -42,6 +42,7 @@ const TableauColumn = (props) => {
                                 onDrop={props.onDrop}
                                 card={card}
                                 index={index}
+                                cardOverlap={props.cardOverlap}
                                 key={card.id} />
                         ))}
                 </div>
