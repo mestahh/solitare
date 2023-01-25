@@ -1,1 +1,3 @@
 - moving from the foundation is allowes only one by one
+- moving ace from foundation to a king makes the ace disappear
+- moving an ace on a king makes it disappear

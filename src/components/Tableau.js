@@ -12,9 +12,7 @@ function Tableau(props) {
 
   const dropHandler = (event, column) => {
     event.preventDefault();
-    if (canItFollow(column.cards, draggedCards) || column.cards.length === 0) {
-      dispatch(move({ 'targetColumnId': column.id, 'cards': draggedCards }));
-    }
+    dispatch(move({ 'targetColumnId': column.id, 'cards': draggedCards }));
   }
 
   return (

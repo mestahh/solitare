@@ -4,15 +4,13 @@ import Card from "./Card";
 import EmptyCard from "./EmptyCard";
 import { useSelector } from "react-redux";
 
-const MIN_FOUNDATION_COLUMN_ID = 10;
-
 const TableauColumn = (props) => {
 
     const dispatch = useDispatch();
     const draggedCards = useSelector(state => state.solitare.draggedCards);
 
     const allowDrop = (event) => {
-        if (draggedCards.length > 1 && props.column.id > MIN_FOUNDATION_COLUMN_ID) {
+        if (draggedCards.length > 1 && props.column.type === "foundation") {
             return false;
         }
         event.preventDefault();

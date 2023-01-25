@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { canItFollow, canItFollowOnFoundation } from './helpers/draghelper';
 
 const game = {
   "columns": [
@@ -13,7 +14,7 @@ const game = {
         }
       ],
       "complete": false,
-      "empty": false,
+      "type": "tableau",
       "id": 1
     },
     {
@@ -22,8 +23,8 @@ const game = {
           "id": 2,
           "reversed": true,
           "shape": "HEART",
-          "value": "8",
-          "order": 8
+          "value": "ACE",
+          "order": 1
         },
         {
           "id": 3,
@@ -34,7 +35,7 @@ const game = {
         }
       ],
       "complete": false,
-      "empty": false,
+      "type": "tableau",
       "id": 2
     },
     {
@@ -62,7 +63,7 @@ const game = {
         }
       ],
       "complete": false,
-      "empty": false,
+      "type": "tableau",
       "id": 3
     },
     {
@@ -98,7 +99,7 @@ const game = {
         }
       ],
       "complete": false,
-      "empty": false,
+      "type": "tableau",
       "id": 4
     },
     {
@@ -128,7 +129,7 @@ const game = {
           "id": 14,
           "reversed": true,
           "shape": "DIAMOND",
-          "value": "7",          
+          "value": "7",
           "order": 7
         },
         {
@@ -140,7 +141,7 @@ const game = {
         }
       ],
       "complete": false,
-      "empty": false,
+      "type": "tableau",
       "id": 5
     },
     {
@@ -189,7 +190,7 @@ const game = {
         }
       ],
       "complete": false,
-      "empty": false,
+      "type": "tableau",
       "id": 6
     },
     {
@@ -239,37 +240,37 @@ const game = {
         {
           "id": 28,
           "reversed": false,
-          "shape": "SPADE",
-          "value": "9",
-          "order": 9
+          "shape": "HEART",
+          "value": "2",
+          "order": 2
         }
       ],
       "complete": false,
-      "empty": false,
+      "type": "tableau",
       "id": 7
     },
     {
       "cards": [],
       "complete": false,
-      "empty": false,
+      "type": "foundation",
       "id": 11
     },
     {
       "cards": [],
       "complete": false,
-      "empty": false,
+      "type": "foundation",
       "id": 12
     },
     {
       "cards": [],
       "complete": false,
-      "empty": false,
+      "type": "foundation",
       "id": 13
     },
     {
       "cards": [],
       "complete": false,
-      "empty": false,
+      "type": "foundation",
       "id": 14
     }
   ]
@@ -284,20 +285,46 @@ const reverseLastCard = (column) => {
   }
 }
 
-const addToColumn = (state, targetColumnId, cards) => {
-  console.log('Adding ' + JSON.stringify(cards) + ' to ' + targetColumnId);
-  const previousColumns = state.game.columns;
+const isFoundation = (state, columnId) => {
+  const column = getColumn(state, columnId)
+  return column.type === "foundation";
+}
 
-  const previous = removeFromColumn(previousColumns, cards);
-  previous.forEach(c => {
-    if (c.id === targetColumnId) {
-      cards.forEach(cardToAdd => {
-        c.cards.push(cardToAdd);
-      });
+const getColumn = (state, columnId) => {
+  return state.game.columns.filter(c => c.id === columnId)[0]
+}
+
+const addToColumn = (state, targetColumnId, cards) => {
+
+  const targetColumn = getColumn(state, targetColumnId);
+
+  if (isFoundation(state, targetColumnId)) {
+    if (canItFollowOnFoundation(targetColumn.cards, cards) || targetColumn.cards.length === 0) {
+      const newColumnState = removeFromColumn(state.game.columns, cards);
+      newColumnState.forEach(c => {
+        if (c.id === targetColumnId) {
+          cards.forEach(cardToAdd => {
+            c.cards.push(cardToAdd);
+          });
+        }
+        reverseLastCard(c.cards);
+      })
+      state.game.columns = newColumnState;
     }
-    reverseLastCard(c.cards);
-  })
-  state.game.columns = previous;
+  } else {
+    if (canItFollow(targetColumn.cards, cards) || targetColumn.cards.length === 0) {
+      const newColumnState = removeFromColumn(state.game.columns, cards);
+      newColumnState.forEach(c => {
+        if (c.id === targetColumnId) {
+          cards.forEach(cardToAdd => {
+            c.cards.push(cardToAdd);
+          });
+        }
+        reverseLastCard(c.cards);
+      })
+      state.game.columns = newColumnState;
+    }
+  }
 }
 
 const removeFromColumn = (previousColumns, cardsToRemove) => {

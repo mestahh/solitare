@@ -1,5 +1,5 @@
-const canItFollow = (targetColumn, cardsToDrop) => {
-    
+export const canItFollow = (targetColumn, cardsToDrop) => {
+    console.log('hello');
     if (targetColumn.length === 0) {
         return true;
     }
@@ -24,4 +24,19 @@ const canItFollow = (targetColumn, cardsToDrop) => {
     return false;
 }
 
-export default canItFollow;
+export const canItFollowOnFoundation = (targetColumn, cardsToDrop) => {
+
+    const cardToDrop = cardsToDrop[0];
+    if (targetColumn.length === 0 && cardToDrop.value === 'ACE') {
+        return true;
+    }
+
+    const lastCard = targetColumn[targetColumn.length - 1];
+
+    if (cardToDrop.order == (lastCard.order + 1)) {
+        if (cardToDrop.shape === lastCard.shape) {
+            return true;
+        }
+    }
+    return false;
+}
