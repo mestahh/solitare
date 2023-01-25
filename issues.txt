@@ -1,2 +1,0 @@
-- drag and drop to self makes the card disappear
-- multiple cards should not be added to foundation

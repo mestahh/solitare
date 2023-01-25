@@ -257,7 +257,7 @@ const reverseLastCard = (column) => {
 
 const addToColumn = (state, targetColumnId, cards) => {
   console.log('Adding ' + JSON.stringify(cards) + ' to ' + targetColumnId);
-  const previousColumns = state.value.columns;
+  const previousColumns = state.game.columns;
 
   const previous = removeFromColumn(previousColumns, cards);
   previous.forEach(c => {
@@ -268,7 +268,7 @@ const addToColumn = (state, targetColumnId, cards) => {
     }
     reverseLastCard(c.cards);
   })
-  state.value.columns = previous;
+  state.game.columns = previous;
 }
 
 const removeFromColumn = (previousColumns, cardsToRemove) => {
@@ -285,15 +285,21 @@ const removeFromColumn = (previousColumns, cardsToRemove) => {
 export const solitareSlice = createSlice({
   name: 'Solitare',
   initialState: {
-    value: game
+    game: game,
+    draggedCards: []
   },
   reducers: {
+    startDrag: (state, action) => {
+      state.draggedCards = action.payload;
+    },
+
     move: (state, action) => {
       addToColumn(state, action.payload.targetColumnId, action.payload.cards);
+      state.draggedCards = [];
     }
   }
 })
 
-export const { move } = solitareSlice.actions
+export const { move, startDrag } = solitareSlice.actions
 
 export default solitareSlice.reducer

@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import canItFollow from "../helpers/draghelper";
 import { move } from '../solitareSlice';
 import './Card';
@@ -8,16 +8,12 @@ import TableauColumn from './TableauColumn';
 function Tableau(props) {
 
   const dispatch = useDispatch();
+  const draggedCards = useSelector(state => state.solitare.draggedCards);
 
   const dropHandler = (event, column) => {
     event.preventDefault();
-    var cardsAsString = event.dataTransfer.getData("text");
-    
-    if (cardsAsString) {
-      var cards = JSON.parse(cardsAsString);
-      if (canItFollow(column.cards, cards) || column.cards.length === 0) {
-        dispatch(move({'targetColumnId': column.id, 'cards': cards}));
-      }
+    if (canItFollow(column.cards, draggedCards) || column.cards.length === 0) {
+      dispatch(move({ 'targetColumnId': column.id, 'cards': draggedCards }));
     }
   }
 

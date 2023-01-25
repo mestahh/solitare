@@ -1,9 +1,20 @@
+import { useDispatch } from "react-redux";
+import { startDrag } from "../solitareSlice";
 import Card from "./Card";
 import EmptyCard from "./EmptyCard";
+import { useSelector } from "react-redux";
+
+const MIN_FOUNDATION_COLUMN_ID = 10;
 
 const TableauColumn = (props) => {
 
+    const dispatch = useDispatch();
+    const draggedCards = useSelector(state => state.solitare.draggedCards);
+
     const allowDrop = (event) => {
+        if (draggedCards.length > 1 && props.column.id > MIN_FOUNDATION_COLUMN_ID) {
+            return false;
+        }
         event.preventDefault();
     };
 
@@ -16,17 +27,13 @@ const TableauColumn = (props) => {
         }
         let cardIndex = cards.indexOf(card);
 
-        if (cardIndex === cards.length - 1) {
-            event.dataTransfer.setData("text", JSON.stringify([card]));
-        } else {
-            let cardsToMove = [];
-            cards.map((c, index) => {
-                if (index >= cardIndex) {
-                    cardsToMove.push(c);
-                }
-            });
-            event.dataTransfer.setData("text", JSON.stringify(cardsToMove));
-        }
+        let cardsToMove = [];
+        cards.map((c, index) => {
+            if (index >= cardIndex) {
+                cardsToMove.push(c);
+            }
+        });
+        dispatch(startDrag(cardsToMove));
     };
 
     var renderedColumn;
