@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import tableauSlice from './tableauSlice'
+import solitareSlice from './solitareSlice'
 
 export default configureStore({
     reducer: {
-        tableau: tableauSlice
+        solitare: solitareSlice
     }
 })

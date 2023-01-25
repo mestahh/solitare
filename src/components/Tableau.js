@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import canItFollow from "../helpers/draghelper";
+import { move } from '../solitareSlice';
 import './Card';
 import './Tableau.css';
 import TableauColumn from './TableauColumn';
-import canItFollow from "../helpers/draghelper";
 
 function Tableau(props) {
+
+  const dispatch = useDispatch();
 
   const dropHandler = (event, column) => {
     event.preventDefault();
@@ -13,7 +16,7 @@ function Tableau(props) {
     if (cardsAsString) {
       var cards = JSON.parse(cardsAsString);
       if (canItFollow(column.cards, cards) || column.cards.length === 0) {
-        props.addToColumn(column.id, cards);
+        dispatch(move({'targetColumnId': column.id, 'cards': cards}));
       }
     }
   }
