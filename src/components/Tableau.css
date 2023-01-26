@@ -1,7 +1,8 @@
 #tableau {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    min-width: 100%;
+    justify-content: space-between;
     min-height: 100%;
+    min-width: calc(875px + 4rem);
+    padding: 0 2rem;
 }

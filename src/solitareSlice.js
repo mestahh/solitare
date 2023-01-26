@@ -9,8 +9,8 @@ const game = {
           "id": 1,
           "reversed": false,
           "shape": "CLUB",
-          "value": "KING",
-          "order": 13
+          "value": "ACE",
+          "order": 1
         }
       ],
       "complete": false,

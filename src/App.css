@@ -16,15 +16,15 @@ main {
   background-color: var(--background-green);
 }
 
-#tableau {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  min-width: 100%;
-  min-height: 100%;
-}
-
 #main-top {
   max-height: calc(4rem + 175px);
   padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#main-top #tableau {
+  min-width: calc(500px + 4rem);
+  padding: 0;
 }
