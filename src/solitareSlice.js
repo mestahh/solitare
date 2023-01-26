@@ -272,7 +272,44 @@ const game = {
       "complete": false,
       "type": "foundation",
       "id": 14
+    },
+    {
+      "cards": [
+        {
+          "id": 37,
+          "reversed": true,
+          "shape": "CLUB",
+          "value": "ACE",
+          "order": 1
+        },
+        {
+          "id": 38,
+          "reversed": true,
+          "shape": "CLUB",
+          "value": "9",
+          "order": 9,
+          "order": 9
+        },
+        {
+          "id": 39,
+          "reversed": true,
+          "shape": "DIAMOND",
+          "value": "6",
+          "order": 6
+        },
+        {
+          "id": 30,
+          "reversed": false,
+          "shape": "DIAMOND",
+          "value": "10",
+          "order": 10
+        }
+      ],
+      "complete": false,
+      "type": "deck",
+      "id": 15
     }
+
   ]
 };
 

@@ -1,0 +1,8 @@
+.deck {
+    position: relative;
+}
+
+.deck-cards {
+    position: absolute;
+    top: 0;
+}

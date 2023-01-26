@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import canItFollow from "../helpers/draghelper";
 import { move } from '../solitareSlice';
 import './Card';
 import './Tableau.css';
