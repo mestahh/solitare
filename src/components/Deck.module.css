@@ -1,0 +1,40 @@
+.deck {
+    position: relative;
+}
+
+.deckCards {
+    position: absolute;
+    top: 0;
+}
+
+.pack {
+    display: block;
+}
+
+.openedCard {
+    /* position: absolute;
+    left: -100px; */
+    transition: append-animate .3s linear;
+}
+
+.openedCards {
+    display: flex;
+    position: absolute;
+    left: -400px;
+}
+
+.openedCards div {
+    top: 0 !important;
+}
+
+.pack.card-wrapper {
+    min-height: 176px;
+}
+
+@keyframes append-animate {
+    from {
+        transform: scale(0);
+        opacity: 0;
+        /* background: #5470B0; */
+      }
+}
