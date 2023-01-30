@@ -277,14 +277,14 @@ const game = {
       "cards": [
         {
           "id": 37,
-          "reversed": true,
+          "reversed": false,
           "shape": "CLUB",
           "value": "ACE",
           "order": 1
         },
         {
           "id": 38,
-          "reversed": true,
+          "reversed": false,
           "shape": "CLUB",
           "value": "9",
           "order": 9,
@@ -292,7 +292,7 @@ const game = {
         },
         {
           "id": 39,
-          "reversed": true,
+          "reversed": false,
           "shape": "DIAMOND",
           "value": "6",
           "order": 6

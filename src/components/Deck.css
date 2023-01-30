@@ -6,3 +6,21 @@
     position: absolute;
     top: 0;
 }
+
+.pack {
+    display: block;
+}
+
+.opened-cards {
+    display: flex;
+    position: absolute;
+    left: -500px;
+}
+
+.opened-cards div {
+    top: 0 !important;
+}
+
+.pack.card-wrapper {
+    min-height: 176px;
+}

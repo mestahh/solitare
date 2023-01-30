@@ -7,8 +7,6 @@ function App() {
 
   const game = useSelector(state => state.solitare.game);
 
-
-  console.log(game.columns.filter(c => c.type === 'tableau')[0]);
   return (
     <div>
       <header>
