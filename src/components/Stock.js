@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { moveToWaste, startDrag, wasteToStock } from '../solitareSlice';
 import Card from './Card';
-import styles from './Stock.module.css';
 import EmptyCard from './EmptyCard';
+import styles from './Stock.module.css';
 
 const WASTE_COLUMN_ID = 16;
 
@@ -15,7 +14,10 @@ const Stock = (props) => {
         return false;
     }
 
-    const dragStartHandler = (event, card) => {
+    const dragStartHandler = (event, card, index, cards) => {
+        if (cards.length - 1 != index) {
+            return;
+        }
         if (card.reversed) {
             return false;
         }
@@ -30,16 +32,19 @@ const Stock = (props) => {
         dispatch(wasteToStock());
     }
 
+    const stockCards = props.stock.cards;
+    const wasteCards = props.waste.cards.slice(-3);
+
     return (
         <div className={styles.stock}>
             <div onClick={restorePack}><EmptyCard onDragOver={noDrop} onDrop={noDrop} /></div>
             <div className={styles.stockCards}>
                 <div className={styles.wasteCards}>
                     {
-                        props.waste.cards.slice(-3).map((card, index) =>
+                        wasteCards.map((card, index) =>
                             <div className={styles.wasteCard} key={card.id}>
                                 <Card
-                                    onDragStart={(event) => dragStartHandler(event, card)}
+                                    onDragStart={(event) => dragStartHandler(event, card, index, wasteCards)}
                                     onDragOver={noDrop}
                                     onDrop={noDrop}
                                     card={card}
@@ -52,10 +57,10 @@ const Stock = (props) => {
                 </div>
                 <div className={styles.stock}>
                     {
-                        props.stock.cards.map((card, index) =>
+                        stockCards.map((card, index) =>
                             <div onClick={(event) => toOpenCards(event, card)} key={card.id}>
                                 <Card
-                                    onDragStart={(event) => dragStartHandler(event, card)}
+                                    onDragStart={(event) => dragStartHandler(event, card, index, stockCards)}
                                     onDragOver={noDrop}
                                     onDrop={noDrop}
                                     card={card}

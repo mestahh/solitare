@@ -1,8 +1,11 @@
 export const canItFollow = (targetColumn, cardsToDrop) => {
-    if (targetColumn.length === 0) {
-        return true;
-    }
     const cardToDrop = cardsToDrop[0];
+
+    if (targetColumn.length === 0) {
+        if (targetColumn.length === 0) {
+            return cardToDrop.value === 'KING';
+        }
+    }
 
     const lastCard = targetColumn[targetColumn.length - 1];
     if ((lastCard.order == (cardToDrop.order + 1)) ||
@@ -24,18 +27,15 @@ export const canItFollow = (targetColumn, cardsToDrop) => {
 }
 
 export const canItFollowOnFoundation = (targetColumn, cardsToDrop) => {
-
     const cardToDrop = cardsToDrop[0];
-    if (targetColumn.length === 0 && cardToDrop.value === 'ACE') {
-        return true;
+    if (targetColumn.length === 0) {
+        return cardToDrop.value === 'ACE';
     }
 
     const lastCard = targetColumn[targetColumn.length - 1];
 
     if (cardToDrop.order == (lastCard.order + 1)) {
-        if (cardToDrop.shape === lastCard.shape) {
-            return true;
-        }
+        return cardToDrop.shape === lastCard.shape;
     }
     return false;
 }

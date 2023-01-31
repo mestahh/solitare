@@ -318,7 +318,6 @@ const game = {
       "type": "waste",
       "id": WASTE_COLUMN_ID
     },
-
   ]
 };
 
@@ -349,60 +348,43 @@ const addToWaste = (state) => {
   if (stockColumn.cards.length > 0) {
     stockColumn.cards[stockColumn.cards.length - 1].reversed = false;
   }
-
 }
 
 const addToColumn = (state, targetColumnId, cards) => {
 
   const targetColumn = getColumn(state, targetColumnId);
-
+  const sourceColumn = getSourceColumn(state.game.columns, cards);
   if (isFoundation(state, targetColumnId)) {
-    if (canItFollowOnFoundation(targetColumn.cards, cards) || targetColumn.cards.length === 0) {
-      const newColumnState = removeFromColumn(state.game.columns, cards);
-      newColumnState.forEach(c => {
-        if (c.id === targetColumnId) {
-          cards.forEach(cardToAdd => {
-            c.cards.push(cardToAdd);
-          });
-        }
-        reverseLastCard(c.cards);
-      })
-      state.game.columns = newColumnState;
-    }
+    addToColumnConditionally(sourceColumn, targetColumn, cards, canItFollowOnFoundation);
   } else {
-    if (canItFollow(targetColumn.cards, cards) || targetColumn.cards.length === 0) {
-      const newColumnState = removeFromColumn(state.game.columns, cards);
-      newColumnState.forEach(c => {
-        if (c.id === targetColumnId) {
-          cards.forEach(cardToAdd => {
-            c.cards.push(cardToAdd);
-          });
-        }
-        reverseLastCard(c.cards);
-      })
-      state.game.columns = newColumnState;
-    }
+    addToColumnConditionally(sourceColumn, targetColumn, cards, canItFollow);
   }
 }
 
-const removeFromColumn = (previousColumns, cardsToRemove) => {
-  const prev = [...previousColumns];
+const addToColumnConditionally = (sourceColumn, targetColumn, cards, condition) => {
+  if (condition(targetColumn.cards, cards)) {
+    removeFromColumn(sourceColumn, cards);
+    cards.forEach(cardToAdd => {
+      targetColumn.cards.push(cardToAdd);
+    });
+    reverseLastCard(sourceColumn.cards);
+  }
+}
+
+const removeFromColumn = (column, cardsToRemove) => {
   const cardIdsToRemove = cardsToRemove.map(c => c.id);
-  const newColumns = [];
-  prev.forEach(c => {
-    let newColumn = c.cards.filter(card => !cardIdsToRemove.includes(card.id));
-    newColumns.push({ ...c, cards: newColumn });
-  });
-  return newColumns;
+  const filteredCards = column.cards.filter(c => !cardIdsToRemove.includes(c.id));
+  column.cards = filteredCards;
 }
 
 const getSourceColumn = (columns, cards) => {
-  columns.forEach(c => {
-    let foundCards = c.cards.filter(card => cards.includes(card));
-    if (foundCards.length != 0) {
-      return c.id;
+  var sourceColumn;
+  columns.forEach(column => {
+    if (column.cards.filter(c => c.id == cards[0].id).length > 0) {
+      sourceColumn = column;
     }
   });
+  return sourceColumn;
 }
 
 export const solitareSlice = createSlice({
