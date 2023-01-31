@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { canItFollow, canItFollowOnFoundation } from './helpers/draghelper';
 
+const STOCK_COLUMN_ID = 15;
+const WASTE_COLUMN_ID = 16;
+
 const game = {
   "columns": [
     {
@@ -277,14 +280,14 @@ const game = {
       "cards": [
         {
           "id": 37,
-          "reversed": false,
+          "reversed": true,
           "shape": "CLUB",
           "value": "ACE",
           "order": 1
         },
         {
           "id": 38,
-          "reversed": false,
+          "reversed": true,
           "shape": "CLUB",
           "value": "9",
           "order": 9,
@@ -292,7 +295,7 @@ const game = {
         },
         {
           "id": 39,
-          "reversed": false,
+          "reversed": true,
           "shape": "DIAMOND",
           "value": "6",
           "order": 6
@@ -306,9 +309,15 @@ const game = {
         }
       ],
       "complete": false,
-      "type": "deck",
-      "id": 15
-    }
+      "type": "stock",
+      "id": STOCK_COLUMN_ID
+    },
+    {
+      "cards": [],
+      "complete": false,
+      "type": "waste",
+      "id": WASTE_COLUMN_ID
+    },
 
   ]
 };
@@ -329,6 +338,18 @@ const isFoundation = (state, columnId) => {
 
 const getColumn = (state, columnId) => {
   return state.game.columns.filter(c => c.id === columnId)[0]
+}
+
+const addToWaste = (state) => {
+  const wasteColumn = getColumn(state, WASTE_COLUMN_ID);
+  const stockColumn = getColumn(state, STOCK_COLUMN_ID);
+  const cardToMove = stockColumn.cards[stockColumn.cards.length - 1];
+  wasteColumn.cards.push(cardToMove);
+  stockColumn.cards.pop();
+  if (stockColumn.cards.length > 0) {
+    stockColumn.cards[stockColumn.cards.length - 1].reversed = false;
+  }
+
 }
 
 const addToColumn = (state, targetColumnId, cards) => {
@@ -375,6 +396,15 @@ const removeFromColumn = (previousColumns, cardsToRemove) => {
   return newColumns;
 }
 
+const getSourceColumn = (columns, cards) => {
+  columns.forEach(c => {
+    let foundCards = c.cards.filter(card => cards.includes(card));
+    if (foundCards.length != 0) {
+      return c.id;
+    }
+  });
+}
+
 export const solitareSlice = createSlice({
   name: 'Solitare',
   initialState: {
@@ -389,10 +419,24 @@ export const solitareSlice = createSlice({
     move: (state, action) => {
       addToColumn(state, action.payload.targetColumnId, action.payload.cards);
       state.draggedCards = [];
+    },
+
+    moveToWaste: (state, action) => {
+      addToWaste(state);
+      state.draggedCards = [];
+    },
+
+    wasteToStock: (state) => {
+      const stock = getColumn(state, STOCK_COLUMN_ID);
+      const waste = getColumn(state, WASTE_COLUMN_ID);
+
+      stock.cards = waste.cards;
+      stock.cards.slice(0, -1).map(c => c.reversed = true);
+      waste.cards = []
     }
   }
 })
 
-export const { move, startDrag } = solitareSlice.actions
+export const { move, startDrag, moveToWaste, wasteToStock } = solitareSlice.actions
 
 export default solitareSlice.reducer

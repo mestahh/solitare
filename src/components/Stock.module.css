@@ -1,33 +1,33 @@
-.deck {
+.stock {
     position: relative;
 }
 
-.deckCards {
+.stockCards {
     position: absolute;
     top: 0;
 }
 
-.pack {
+.waste {
     display: block;
 }
 
-.openedCard {
+.wasteCard {
     /* position: absolute;
     left: -100px; */
     transition: append-animate .3s linear;
 }
 
-.openedCards {
+.wasteCards {
     display: flex;
     position: absolute;
     left: -400px;
 }
 
-.openedCards div {
+.wasteCards div {
     top: 0 !important;
 }
 
-.pack.card-wrapper {
+.stock.card-wrapper {
     min-height: 176px;
 }
 

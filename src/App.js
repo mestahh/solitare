@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import './App.css';
-import Deck from './components/Deck';
+import Stock from './components/Stock';
 import Tableau from './components/Tableau';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       <main>
         <section id="main-top">
           <Tableau columns={game.columns.slice(7, 11)} cardOverlap='-174' />
-          <Deck deck={game.columns.filter(c => c.type === 'deck')[0]} />
+          <Stock stock={game.columns.filter(c => c.type === 'stock')[0]} waste={game.columns.filter(c => c.type === 'waste')[0]} />
         </section>
         <Tableau columns={game.columns.slice(0, 7)} cardOverlap='-135' />
       </main>
