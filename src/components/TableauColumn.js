@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { startDrag } from "../solitareSlice";
+import { move, startDrag } from "../solitareSlice";
 import Card from "./Card";
 import EmptyCard from "./EmptyCard";
 import { useSelector } from "react-redux";
@@ -8,18 +8,28 @@ const TableauColumn = (props) => {
 
     const dispatch = useDispatch();
     const draggedCards = useSelector(state => state.solitare.draggedCards);
+    const cards = props.column.cards;
+    const column = props.column;
 
     const allowDrop = (event) => {
-        if (draggedCards.length > 1 && props.column.type === "foundation") {
+        if (draggedCards.length > 1 && column.type === "foundation") {
             return false;
         }
         event.preventDefault();
     };
 
+    const moveToFoundation = () => {
+        let cardToMove = [cards[cards.length - 1]];
+        console.log('move to foundation', cardToMove);
+
+        dispatch(startDrag([cardToMove]));
+        const foundationIds = [11, 12, 13, 14];
+        foundationIds.forEach(id => {
+            dispatch(move({ 'targetColumnId': id, 'cards': cardToMove }));
+        });
+    }
+
     const dragStartHandler = (event, card) => {
-
-        let cards = props.column.cards;
-
         if (card.reversed) {
             return false;
         }
@@ -35,12 +45,12 @@ const TableauColumn = (props) => {
     };
 
     var renderedColumn;
-    if (props.column.cards.length > 0) {
+    if (cards.length > 0) {
         renderedColumn =
             (
                 <div className="tableau-column">
                     {
-                        props.column.cards.map((card, index) => (
+                        cards.map((card, index) => (
                             <Card
                                 onDragStart={(event) => dragStartHandler(event, card)}
                                 onDragOver={allowDrop}
@@ -48,7 +58,9 @@ const TableauColumn = (props) => {
                                 card={card}
                                 index={index}
                                 cardOverlap={props.cardOverlap}
-                                key={card.id} />
+                                key={card.id} 
+                                onDblClick={moveToFoundation}
+                                />
                         ))}
                 </div>
             );

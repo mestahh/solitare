@@ -1,26 +1,42 @@
 .stock {
+  
+}
+
+/* .stock .emptyCard {
+    position:absolute;
+} */
+
+.stockCards {
+    display: flex;
+}
+
+.wasteCard:nth-child(1) {
     position: relative;
 }
 
-.stockCards {
-    position: absolute;
-    top: 0;
+.wasteCard:nth-child(2) {
+    position: relative;
+    /* left: -90px; */
+}
+
+.wasteCard:nth-child(3) {
+    position: relative;
+    /* left: -180px; */
 }
 
 .waste {
-    display: block;
+    
 }
 
 .wasteCard {
-    /* position: absolute;
-    left: -100px; */
-    transition: append-animate .3s linear;
+    top: 0px !important;
+    margin-left: -90px;
 }
 
 .wasteCards {
     display: flex;
-    position: absolute;
-    left: -400px;
+    max-width: 200px;
+    margin-right: 2rem;
 }
 
 .wasteCards div {
@@ -31,10 +47,3 @@
     min-height: 176px;
 }
 
-@keyframes append-animate {
-    from {
-        transform: scale(0);
-        opacity: 0;
-        /* background: #5470B0; */
-      }
-}

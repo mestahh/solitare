@@ -24,20 +24,40 @@ const Stock = (props) => {
         dispatch(startDrag([card]));
     };
 
-    const toOpenCards = (event, card) => {
+    const moveStockToWaste = (event, card) => {
         dispatch(moveToWaste({ 'targetColumnId': WASTE_COLUMN_ID, 'cards': [card] }));
     }
 
-    const restorePack = () => {
+    const moveWasteToStock = () => {
         dispatch(wasteToStock());
     }
 
     const stockCards = props.stock.cards;
     const wasteCards = props.waste.cards.slice(-3);
 
+    var stock;
+
+    if (stockCards.length == 0) {
+        stock = <div onClick={moveWasteToStock} className={styles.emptyCard}><EmptyCard onDragOver={noDrop} onDrop={noDrop} /></div>
+    } else {
+        stock = stockCards.map((card, index) =>
+            <div onClick={(event) => moveStockToWaste(event, card)} key={card.id}>
+                <Card
+                    onDragStart={(event) => dragStartHandler(event, card, index, stockCards)}
+                    onDragOver={noDrop}
+                    onDrop={noDrop}
+                    card={card}
+                    index={index}
+                    cardOverlap={'-173'}
+
+                />
+            </div>
+        )
+    }
+
+
     return (
         <div className={styles.stock}>
-            <div onClick={restorePack}><EmptyCard onDragOver={noDrop} onDrop={noDrop} /></div>
             <div className={styles.stockCards}>
                 <div className={styles.wasteCards}>
                     {
@@ -55,23 +75,7 @@ const Stock = (props) => {
                     }
 
                 </div>
-                <div className={styles.stock}>
-                    {
-                        stockCards.map((card, index) =>
-                            <div onClick={(event) => toOpenCards(event, card)} key={card.id}>
-                                <Card
-                                    onDragStart={(event) => dragStartHandler(event, card, index, stockCards)}
-                                    onDragOver={noDrop}
-                                    onDrop={noDrop}
-                                    card={card}
-                                    index={index}
-                                    cardOverlap={'-173'}
-
-                                />
-                            </div>
-                        )
-                    }
-                </div>
+                <div className={styles.stock}>{stock}</div>
             </div>
 
         </div >

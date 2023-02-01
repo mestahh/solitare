@@ -21,7 +21,9 @@ const Card = props => {
             onDragEnd={props.onDragEnd}
             onDragOver={props.onDragOver}
             onDrop={props.onDrop}
-            style={cardPosition}>
+            style={cardPosition}
+            onDoubleClick={props.onDblClick}
+            >
             <div className={reversedStyle}>
                 <div className="card-front">
                     <img src={imageUrl} alt="Card image" />
