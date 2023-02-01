@@ -20,7 +20,6 @@ const TableauColumn = (props) => {
 
     const moveToFoundation = () => {
         let cardToMove = [cards[cards.length - 1]];
-        console.log('move to foundation', cardToMove);
 
         dispatch(startDrag([cardToMove]));
         const foundationIds = [11, 12, 13, 14];

@@ -19,7 +19,6 @@ function App() {
   if (game.columns.length == 0) {
     gameArea = '';
   } else {
-    console.log(game.columns);
     gameArea = (
       <main>
         <section id="main-top">

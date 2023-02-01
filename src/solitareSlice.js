@@ -94,13 +94,12 @@ export const solitareSlice = createSlice({
       const stock = getColumn(state, STOCK_COLUMN_ID);
       const waste = getColumn(state, WASTE_COLUMN_ID);
 
-      stock.cards = waste.cards;
+      stock.cards = waste.cards.reverse();
       stock.cards.slice(0, -1).map(c => c.reversed = true);
       waste.cards = []
-    },  
+    },
 
     loadColumns: (state, action) => {
-      console.log(action);
       state.game.columns = action.payload.data;
     }
   }
@@ -109,14 +108,3 @@ export const solitareSlice = createSlice({
 export const { move, startDrag, moveToWaste, wasteToStock, loadColumns } = solitareSlice.actions
 
 export default solitareSlice.reducer
-
-// export function deal() {
-//   return async function callDealApi(dispatch, getState) {
-//     const response = await fetch(`http://localhost:8080/api/deal`, { method: 'POST' })
-//       .then(response => response.json())
-//       .then((data) => {
-//         dispatch(loadColumns({ data: data }))
-//       });
-
-//   }
-// }
