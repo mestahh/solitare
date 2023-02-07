@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { moveToWaste, startDrag, wasteToStock } from '../solitareSlice';
+import { FOUNDATION_1_ID, FOUNDATION_2_ID, FOUNDATION_3_ID, FOUNDATION_4_ID } from '../helpers/columnIds';
+import { moveToWaste, startDrag, wasteToStock, move } from '../solitareSlice';
 import Card from './Card';
 import EmptyCard from './EmptyCard';
 import styles from './Stock.module.css';
@@ -9,6 +10,8 @@ const WASTE_COLUMN_ID = 16;
 const Stock = (props) => {
 
     const dispatch = useDispatch();
+    const stockCards = props.stock.cards;
+    const wasteCards = props.waste.cards.slice(-3);
 
     const noDrop = () => {
         return false;
@@ -32,8 +35,18 @@ const Stock = (props) => {
         dispatch(wasteToStock());
     }
 
-    const stockCards = props.stock.cards;
-    const wasteCards = props.waste.cards.slice(-3);
+    const moveToFoundation = () => {
+        let cardToMove = [wasteCards[wasteCards.length - 1]];
+        dispatch(startDrag([cardToMove]));
+        const foundationIds = [
+            FOUNDATION_1_ID,
+            FOUNDATION_2_ID,
+            FOUNDATION_3_ID,
+            FOUNDATION_4_ID];
+        foundationIds.forEach(id => {
+            dispatch(move({ 'targetColumnId': id, 'cards': cardToMove }));
+        });
+    }
 
     var stock;
 
@@ -49,7 +62,6 @@ const Stock = (props) => {
                     card={card}
                     index={index}
                     cardOverlap={'-173'}
-
                 />
             </div>
         )
@@ -69,6 +81,7 @@ const Stock = (props) => {
                                     onDrop={noDrop}
                                     card={card}
                                     index={index}
+                                    onDblClick={moveToFoundation}
                                 />
                             </div>
                         )

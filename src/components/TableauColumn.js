@@ -3,7 +3,7 @@ import { move, startDrag } from "../solitareSlice";
 import Card from "./Card";
 import EmptyCard from "./EmptyCard";
 import { useSelector } from "react-redux";
-
+import { FOUNDATION_1_ID, FOUNDATION_2_ID, FOUNDATION_3_ID, FOUNDATION_4_ID, } from "../helpers/columnIds";
 const TableauColumn = (props) => {
 
     const dispatch = useDispatch();
@@ -21,8 +21,11 @@ const TableauColumn = (props) => {
     const moveToFoundation = () => {
         let cardToMove = [cards[cards.length - 1]];
 
-        dispatch(startDrag([cardToMove]));
-        const foundationIds = [11, 12, 13, 14];
+        const foundationIds = [
+            FOUNDATION_1_ID,
+            FOUNDATION_2_ID,
+            FOUNDATION_3_ID,
+            FOUNDATION_4_ID];
         foundationIds.forEach(id => {
             dispatch(move({ 'targetColumnId': id, 'cards': cardToMove }));
         });
@@ -57,9 +60,9 @@ const TableauColumn = (props) => {
                                 card={card}
                                 index={index}
                                 cardOverlap={props.cardOverlap}
-                                key={card.id} 
+                                key={card.id}
                                 onDblClick={moveToFoundation}
-                                />
+                            />
                         ))}
                 </div>
             );
